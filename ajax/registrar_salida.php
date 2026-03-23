@@ -3,6 +3,7 @@ session_start();
 
 // IMPORTANTE: No incluir nada antes del header
 header('Content-Type: application/json');
+require_once dirname(__DIR__) . '/config/database.php';
 
 // Capturar cualquier salida no deseada
 ob_start();
@@ -35,14 +36,9 @@ try {
         exit;
     }
     
-    // Conexión directa a base de datos (sin clases que puedan generar output)
-    $host = 'localhost';
-    $dbname = 'sgv';
-    $username = 'root';
-    $password = '';
-    
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Reutilizar conexión central para evitar credenciales hardcodeadas
+    $database = Database::getInstance();
+    $pdo = $database->getConnection();
     
     // Obtener información de la visita
     $stmt = $pdo->prepare("SELECT id, estado, a_quien_visita, fecha_ingreso FROM visitas WHERE id = ?");
