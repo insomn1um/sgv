@@ -52,7 +52,7 @@ class Visita {
                        e.nombre as empresa_nombre, e.condicion as empresa_condicion
                 FROM visitas v 
                 JOIN trabajadores t ON v.trabajador_id = t.id 
-                JOIN empresas e ON t.empresa_id = e.id
+                LEFT JOIN empresas e ON t.empresa_id = e.id
                 WHERE v.trabajador_id = ? 
                 ORDER BY v.fecha_ingreso DESC";
         

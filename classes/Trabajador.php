@@ -32,9 +32,10 @@ class Trabajador {
     }
     
     public function obtenerPorId($id) {
+        // LEFT JOIN: si falta la empresa (FK roto o empresa eliminada), igual mostrar al trabajador
         $sql = "SELECT t.*, e.nombre as empresa_nombre, e.condicion as empresa_condicion 
                 FROM trabajadores t 
-                JOIN empresas e ON t.empresa_id = e.id 
+                LEFT JOIN empresas e ON t.empresa_id = e.id 
                 WHERE t.id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
