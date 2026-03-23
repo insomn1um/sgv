@@ -1,34 +1,21 @@
-# Archivos de configuración con credenciales
-.vscode/sftp.json
+# Sensitive local configuration
 config/database.php
 config/database.production.php
+.vscode/sftp.json
 
-# Archivos del sistema
+# VCS/editor artifacts
+.git/
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
-*.log
 
-# Archivos temporales
+# Logs/temp
+*.log
 *.tmp
 *.bak
 *.swp
 *~
 
-# Archivos de IDE
-.idea/
-.vscode/
-*.code-workspace
-
-# Archivos de Node (si se usan)
+# Optional local dependencies
 node_modules/
-package-lock.json
-
-# Archivos de base de datos
-*.sql
-*.db
-
-# Archivos de documentación (opcional, descomentar si no quieres subirlos)
-# *.md
-
-
-
