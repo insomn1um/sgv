@@ -1,0 +1,392 @@
+/* Sidebar SGV - Centralizado - Estructura protegida */
+.sidebar {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+    min-height: 100vh !important;
+    color: white !important;
+    position: fixed !important;
+    z-index: 1040 !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 240px !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+}
+
+/* Evitar saltos horizontales por aparición/desaparición de scrollbar */
+html {
+    scrollbar-gutter: stable both-edges;
+}
+
+/* En escritorio, NO agregar margen al body - se maneja en .main-content */
+/* @media (min-width: 992px) {
+    body {
+        margin-left: 240px;
+    }
+} */
+
+.sidebar .nav-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    display: block !important;
+}
+
+.sidebar nav,
+.sidebar .nav {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+/* Enlaces del menú - VALORES IDÉNTICOS EN TODOS LOS ESTADOS - FORZADOS CON !important */
+.sidebar .nav-link {
+    display: block !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    background: transparent !important;
+    border-radius: 8px !important;
+    margin: 3px 10px !important;
+    padding: 10px 12px !important;
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    line-height: 1.5 !important;
+    font-size: 1rem !important;
+    box-sizing: border-box !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+    width: auto !important;
+    height: auto !important;
+    position: relative !important;
+}
+
+.sidebar .nav-link:hover {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    margin: 3px 10px !important;
+    padding: 10px 12px !important;
+    border: none !important;
+    outline: none !important;
+    transform: none !important;
+}
+
+.sidebar .nav-link.active {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    margin: 3px 10px !important;
+    padding: 10px 12px !important;
+    border: none !important;
+    outline: none !important;
+    transform: none !important;
+}
+
+.sidebar .nav-link:focus {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    margin: 3px 10px !important;
+    padding: 10px 12px !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Submenús - VALORES IDÉNTICOS EN TODOS LOS ESTADOS - FORZADOS CON !important */
+.sidebar .nav-link.submenu {
+    font-size: 0.9rem !important;
+    padding: 8px 12px 8px 36px !important;
+    margin: 2px 10px !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.sidebar .nav-link.submenu:hover {
+    padding: 8px 12px 8px 36px !important;
+    margin: 2px 10px !important;
+    transform: none !important;
+}
+
+.sidebar .nav-link.submenu.active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    padding: 8px 12px 8px 36px !important;
+    margin: 2px 10px !important;
+    transform: none !important;
+}
+
+.sidebar .nav-link.submenu:focus {
+    padding: 8px 12px 8px 36px !important;
+    margin: 2px 10px !important;
+    transform: none !important;
+}
+
+/* Títulos de sección (GESTIÓN, VISITAS) - FORZADOS CON !important */
+.sidebar .nav-link.text-white-50 {
+    margin: 8px 10px 4px 10px !important;
+    padding: 8px 12px !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Contenedores de submenú - siempre visibles - FORZADOS CON !important */
+#gestionSubmenu,
+#visitasSubmenu {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: none !important;
+    min-height: auto !important;
+    transform: none !important;
+    transition: none !important;
+    /* Prevenir cualquier animación o transición de Bootstrap */
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+}
+
+/* Forzar que los submenús NO sean colapsables */
+#gestionSubmenu.collapse,
+#visitasSubmenu.collapse,
+#gestionSubmenu.collapsing,
+#visitasSubmenu.collapsing {
+    display: block !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Íconos fijos */
+.sidebar .nav-link i {
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* Para sidebars con estructura ul/li (ver_trabajador.php) - FORZADOS CON !important */
+.sidebar .nav-pills .nav-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.sidebar .nav-pills .nav-link {
+    margin: 3px 10px !important;
+    padding: 10px 12px !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Protección adicional - Resetear cualquier estilo inline problemático */
+.sidebar * {
+    /* Los estilos CSS con !important tienen prioridad */
+}
+
+/* Asegurar estructura del contenedor del sidebar */
+.sidebar > div {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 1rem !important;
+    box-sizing: border-box !important;
+}
+
+/* Asegurar que los enlaces no cambien de tamaño */
+.sidebar .nav-link,
+.sidebar .nav-link:hover,
+.sidebar .nav-link:active,
+.sidebar .nav-link:focus,
+.sidebar .nav-link.active {
+    min-width: auto !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Protección adicional contra Bootstrap */
+.sidebar .nav-item > div[id*="Submenu"] {
+    display: block !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Prevenir que Bootstrap oculte los submenús */
+.sidebar .collapse:not(.show) {
+    display: block !important;
+    height: auto !important;
+}
+
+.sidebar .collapsing {
+    display: block !important;
+    height: auto !important;
+    transition: none !important;
+}
+
+/* Main Content - Estilos comunes para todas las páginas */
+/* Nota: El padding está definido en spacing.css para mantener consistencia */
+.main-content {
+    background: #f8f9fa;
+    min-height: 100vh;
+    margin-left: 240px;
+}
+
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+/* Overlay para móviles cuando el sidebar está abierto */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1039;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Scrollbar personalizado para el sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Navbar - Asegurar z-index correcto */
+.navbar.fixed-top {
+    z-index: 1030;
+}
+
+/* Modos del sidebar: Pinned (fijado) y Floating (flotante) */
+.sidebar-pinned {
+    position: fixed !important;
+}
+
+.sidebar-floating {
+    position: fixed !important;
+    transition: left 0.3s ease !important;
+}
+
+/* En modo flotante en escritorio, el sidebar está oculto por defecto */
+@media (min-width: 992px) {
+    .sidebar-floating {
+        left: -240px !important;
+    }
+    
+    .sidebar-floating:hover {
+        left: 0 !important;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Cuando el sidebar está flotante, el main-content ocupa todo el ancho */
+    .sidebar-floating ~ .main-content,
+    body:has(.sidebar-floating) .main-content {
+        margin-left: 0 !important;
+    }
+}
+
+/* Botón de pin */
+#sidebarPinBtn {
+    font-size: 0.875rem;
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+#sidebarPinBtn:hover {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(1.1);
+}
+
+#sidebarPinBtn:active {
+    transform: scale(0.95);
+}
+
+#sidebarPinBtn i {
+    transition: transform 0.2s ease;
+    font-size: 0.9rem;
+}
+
+#sidebarPinBtn:active i {
+    transform: rotate(15deg);
+}
+
+/* Indicador visual cuando está desfijado */
+.sidebar-floating #sidebarPinBtn i {
+    opacity: 0.5;
+}
+
+.sidebar-pinned #sidebarPinBtn i {
+    opacity: 1;
+}
+
+/* Responsive - En móviles siempre se comporta igual */
+@media (max-width: 991.98px) {
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1050; /* Por encima del navbar en móviles */
+    }
+    
+    .sidebar.show {
+        left: 0;
+    }
+    
+    /* En móviles, el pin no afecta el comportamiento */
+    .sidebar-floating,
+    .sidebar-pinned {
+        left: -260px !important;
+    }
+    
+    .sidebar.show,
+    .sidebar-floating.show,
+    .sidebar-pinned.show {
+        left: 0 !important;
+    }
+    
+    /* Ocultar botón de pin en móviles (opcional) */
+    #sidebarPinBtn {
+        display: none;
+    }
+}

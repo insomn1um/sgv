@@ -1,0 +1,122 @@
+/* Estilos Estándar de Tablas - SGV */
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    margin-bottom: 0;
+}
+
+.table thead {
+    background: #f8f9fa;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+}
+
+.table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Tabla con hover más suave */
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Tabla striped */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-striped tbody tr:nth-of-type(odd):hover {
+    background-color: #f1f5f9;
+}
+
+/* Tabla responsive */
+.table-responsive {
+    border-radius: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Badges en tablas */
+.table .badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+}
+
+/* Botones de acción en tablas */
+.table .btn-action {
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0 0.25rem;
+}
+
+.table .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8125rem;
+}
+
+/* Alineación de texto en tablas */
+.table .text-center {
+    text-align: center;
+}
+
+.table .text-end {
+    text-align: right;
+}
+
+.table .text-start {
+    text-align: left;
+}
+
+/* Tabla sin bordes */
+.table-borderless td,
+.table-borderless th {
+    border: none;
+}
+
+/* Tabla compacta */
+.table-sm th,
+.table-sm td {
+    padding: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.875rem;
+    }
+    
+    .table thead th,
+    .table tbody td {
+        padding: 0.5rem;
+    }
+    
+    .table .btn-action {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+

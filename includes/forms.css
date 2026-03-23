@@ -1,0 +1,180 @@
+/* Estilos Estándar de Formularios - SGV */
+
+/* Inputs y Selects */
+.form-control,
+.form-select {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    outline: none;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: #10b981;
+    box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.form-label.required::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Input Groups */
+.input-group-text {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+}
+
+.input-group .form-control:focus {
+    border-left: 2px solid #3b82f6;
+}
+
+/* Form Floating (Bootstrap 5) */
+.form-floating {
+    position: relative;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+    height: calc(3.5rem + 2px);
+    line-height: 1.25;
+    padding: 1rem 0.75rem;
+}
+
+.form-floating > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.form-floating > .form-control:focus,
+.form-floating > .form-control:not(:placeholder-shown) {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    opacity: 0.65;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+/* Checkboxes y Radio Buttons */
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #d1d5db;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.form-check-input:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.form-check-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+.form-check-label {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* Invalid Feedback */
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #dc3545;
+}
+
+.valid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #10b981;
+}
+
+/* Form Text (Ayuda) */
+.form-text {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* Field Required/Optional */
+.field-required::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.field-optional {
+    color: #6c757d;
+    font-size: 0.875em;
+}
+
+.help-text {
+    font-size: 0.875em;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* Form Sections */
+.form-section {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+}
+

@@ -1,0 +1,249 @@
+/* Estilos Comunes - SGV */
+
+/* Body y Background */
+body {
+    background: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #374151;
+    line-height: 1.6;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    font-size: 0.875rem;
+}
+
+.badge.bg-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+}
+
+.badge.bg-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.badge.bg-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+.badge.bg-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+}
+
+.badge.bg-info {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+}
+
+/* Badges de condición personalizados */
+.badge-condicion {
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-aprobada {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-denegada {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+    z-index: 1050;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #3b82f6;
+}
+
+.dropdown-item i {
+    width: 1.25rem;
+    text-align: center;
+}
+
+/* Modales */
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 15px 15px 0 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    border-radius: 0 0 15px 15px;
+    padding: 1rem 1.5rem;
+    background: #f8f9fa;
+}
+
+/* Utilidades */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Spacing helpers */
+.gap-1 { gap: 0.25rem !important; }
+.gap-2 { gap: 0.5rem !important; }
+.gap-3 { gap: 1rem !important; }
+.gap-4 { gap: 1.5rem !important; }
+
+/* Loading Spinner */
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+}
+
+/* Info Items (para páginas de detalles) */
+.info-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.info-value {
+    color: #212529;
+    font-size: 1.1rem;
+}
+
+/* Status Badges personalizados */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.status-active {
+    background: linear-gradient(135deg, #3b82f6 0%, #059669 100%);
+    color: white;
+}
+
+.status-finished {
+    background: linear-gradient(135deg, #1e293b 0%, #6c757d 100%);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .modal-content {
+        border-radius: 12px;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+    
+    .info-item {
+        padding: 0.75rem;
+    }
+    
+    .info-value {
+        font-size: 1rem;
+    }
+    
+    .status-badge {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+

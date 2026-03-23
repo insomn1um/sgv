@@ -1,0 +1,91 @@
+/* Estilos Estándar de Espaciado - SGV */
+
+/* Main Content - Padding estándar */
+.main-content {
+    padding-top: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+/* Container-fluid dentro de main-content - Sin padding horizontal adicional */
+.main-content > .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Padding estándar para contenido dentro de container-fluid */
+.main-content .container-fluid {
+    padding: 1.5rem 0;
+}
+
+/* Padding para contenido directo en main-content (sin container-fluid) */
+.main-content > *:not(.container-fluid) {
+    padding: 0;
+}
+
+/* Padding para secciones principales */
+.content-section {
+    padding: 1.5rem 0;
+}
+
+/* Padding para cards en listas */
+.card-list {
+    margin-bottom: 1.5rem;
+}
+
+/* Padding para formularios */
+.form-container {
+    padding: 1.5rem;
+}
+
+/* Padding para tablas */
+.table-container {
+    padding: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .main-content {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .main-content .container-fluid {
+        padding: 1rem 0;
+    }
+    
+    .content-section {
+        padding: 1rem 0;
+    }
+    
+    .form-container,
+    .table-container {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .main-content .container-fluid {
+        padding: 0.75rem 0;
+    }
+    
+    .content-section {
+        padding: 0.75rem 0;
+    }
+    
+    .form-container,
+    .table-container {
+        padding: 0.75rem;
+    }
+}
+

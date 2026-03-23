@@ -1,0 +1,17 @@
+/* CSS Principal - SGV */
+/* Este archivo importa todos los estilos estándar del sistema */
+
+/* Importar estilos comunes primero */
+@import url('common.css');
+
+/* Importar estilos de componentes */
+@import url('cards.css');
+@import url('forms.css');
+@import url('tables.css');
+@import url('alerts.css');
+@import url('navbar.css');
+@import url('buttons.css');
+@import url('spacing.css');
+
+/* Nota: sidebar.css se incluye por separado ya que tiene estilos específicos */
+
