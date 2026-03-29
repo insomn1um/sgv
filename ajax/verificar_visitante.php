@@ -16,9 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$tipo_identificacion = trim($_POST['tipo_identificacion'] ?? '');
 $numero_identificacion = trim($_POST['numero_identificacion'] ?? '');
 
-if (empty($numero_identificacion)) {
+if ($tipo_identificacion === '') {
+    echo json_encode(['error' => 'Tipo de identificación requerido']);
+    exit;
+}
+
+if ($numero_identificacion === '') {
     echo json_encode(['error' => 'Número de identificación requerido']);
     exit;
 }
@@ -27,9 +33,8 @@ try {
     $database = Database::getInstance();
     $db = $database->getConnection();
     $visitante = new Visitante($db);
-    
-    // Buscar visitante por número de identificación
-    $visitante_encontrado = $visitante->findByIdentificacion($numero_identificacion);
+
+    $visitante_encontrado = $visitante->findByTipoYNumero($tipo_identificacion, $numero_identificacion);
     
     if ($visitante_encontrado) {
         echo json_encode([

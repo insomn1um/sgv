@@ -115,6 +115,20 @@ function validarRUT($rut) {
     return strtoupper($dv) == $dvEsperado;
 }
 
+/**
+ * Normaliza el número de identificación para guardar/buscar de forma consistente.
+ * Para RUT: solo dígitos + dígito verificador (K mayúscula), sin puntos ni guion.
+ */
+function normalizarNumeroIdentificacion($tipo_identificacion, $numero) {
+    $tipo = strtolower(trim((string) $tipo_identificacion));
+    $numero = trim((string) $numero);
+    if ($tipo === 'rut') {
+        $limpio = preg_replace('/[^0-9kK]/', '', $numero);
+        return $limpio === '' ? '' : strtoupper($limpio);
+    }
+    return $numero;
+}
+
 // Función para formatear fecha
 function formatDate($date) {
     return date('d/m/Y H:i', strtotime($date));

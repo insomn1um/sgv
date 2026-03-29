@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../includes/functions.php';
 
 class Visitante {
     private $conn;
@@ -28,6 +29,11 @@ class Visitante {
 
     // Crear nuevo visitante
     public function create() {
+        $this->numero_identificacion = normalizarNumeroIdentificacion(
+            $this->tipo_identificacion ?? '',
+            $this->numero_identificacion ?? ''
+        );
+
         $query = "INSERT INTO " . $this->table_name . "
                   (nombre, apellido, tipo_identificacion, numero_identificacion, 
                    numero_contacto, email, empresa_representa, a_quien_visita, motivo_visita, 
@@ -102,20 +108,63 @@ class Visitante {
         return false;
     }
 
-    // Buscar visitante por número de identificación
-    public function findByIdentificacion($numero_identificacion) {
-        $query = "SELECT * FROM " . $this->table_name . " 
-                  WHERE numero_identificacion = :numero_identificacion";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":numero_identificacion", $numero_identificacion);
-        $stmt->execute();
-        
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    /**
+     * Busca por tipo y número (ambos obligatorios) para evitar colisiones entre RUT, pasaporte, DNI, etc.
+     * RUT: compara forma normalizada y coincide con registros antiguos con puntos o guion.
+     */
+    public function findByTipoYNumero($tipo_identificacion, $numero_identificacion) {
+        $tipo = trim((string) $tipo_identificacion);
+        $numNorm = normalizarNumeroIdentificacion($tipo, $numero_identificacion);
+        if ($tipo === '' || $numNorm === '') {
+            return null;
+        }
+
+        if (strtolower($tipo) === 'rut') {
+            $query = "SELECT * FROM " . $this->table_name . " 
+                      WHERE tipo_identificacion = :tipo
+                      AND (
+                        numero_identificacion = :num_raw
+                        OR UPPER(REPLACE(REPLACE(REPLACE(TRIM(numero_identificacion), '.', ''), '-', ''), ' ', '')) = :num_norm
+                      )
+                      LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                ':tipo' => $tipo,
+                ':num_raw' => trim((string) $numero_identificacion),
+                ':num_norm' => $numNorm,
+            ]);
+        } else {
+            $query = "SELECT * FROM " . $this->table_name . " 
+                      WHERE tipo_identificacion = :tipo AND numero_identificacion = :numero
+                      LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                ':tipo' => $tipo,
+                ':numero' => $numNorm,
+            ]);
+        }
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
+    /**
+     * @deprecated Favor usar findByTipoYNumero. Sin $tipo_identificacion ya no busca (evita falsos "ya existe").
+     */
+    public function findByIdentificacion($numero_identificacion, $tipo_identificacion = null) {
+        if ($tipo_identificacion === null || $tipo_identificacion === '') {
+            return null;
+        }
+        return $this->findByTipoYNumero($tipo_identificacion, $numero_identificacion);
     }
 
     // Actualizar visitante
     public function update() {
+        $this->numero_identificacion = normalizarNumeroIdentificacion(
+            $this->tipo_identificacion ?? '',
+            $this->numero_identificacion ?? ''
+        );
+
         $query = "UPDATE " . $this->table_name . "
                   SET nombre = :nombre, apellido = :apellido, tipo_identificacion = :tipo_identificacion,
                       numero_identificacion = :numero_identificacion, numero_contacto = :numero_contacto,
@@ -156,21 +205,15 @@ class Visitante {
         return $stmt->execute();
     }
 
-    // Verificar si número de identificación existe
-    public function identificacionExists($numero_identificacion, $exclude_id = null) {
-        $query = "SELECT id FROM " . $this->table_name . " WHERE numero_identificacion = :numero_identificacion";
-        if ($exclude_id) {
-            $query .= " AND id != :exclude_id";
+    public function identificacionExists($tipo_identificacion, $numero_identificacion, $exclude_id = null) {
+        $found = $this->findByTipoYNumero($tipo_identificacion, $numero_identificacion);
+        if (!$found) {
+            return false;
         }
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":numero_identificacion", $numero_identificacion);
-        if ($exclude_id) {
-            $stmt->bindParam(":exclude_id", $exclude_id);
+        if ($exclude_id !== null && (int) $found['id'] === (int) $exclude_id) {
+            return false;
         }
-        
-        $stmt->execute();
-        return $stmt->rowCount() > 0;
+        return true;
     }
 
     // Obtener visitantes del día
@@ -220,31 +263,62 @@ class Visitante {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Generar código QR para preregistro
-    public function generarCodigoQR($visitante_id) {
-        // Generar código único
-        $codigo = generateQRCode();
-        
+    /**
+     * Genera un registro en codigos_qr. $creado_por puede ser null (p. ej. flujo público).
+     */
+    public function generarCodigoQR($visitante_id, $creado_por = null) {
+        $visitante_id = (int) $visitante_id;
+        if ($visitante_id <= 0) {
+            return false;
+        }
+
+        $usuario = $creado_por !== null ? $creado_por : $this->registrado_por;
+
         $query = "INSERT INTO codigos_qr (codigo, visitante_id, creado_por) 
                   VALUES (:codigo, :visitante_id, :creado_por)";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":codigo", $codigo);
-        $stmt->bindParam(":visitante_id", $visitante_id);
-        $stmt->bindParam(":creado_por", $this->registrado_por);
-        
-        if ($stmt->execute()) {
-            return $codigo;
+
+        for ($intentos = 0; $intentos < 5; $intentos++) {
+            $codigo = generateQRCode();
+            try {
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute([
+                    ':codigo' => $codigo,
+                    ':visitante_id' => $visitante_id,
+                    ':creado_por' => $usuario,
+                ]);
+                return $codigo;
+            } catch (PDOException $e) {
+                $dup = (stripos($e->getMessage(), 'Duplicate') !== false
+                    || $e->getCode() == 23000
+                    || $e->getCode() === '23000');
+                if ($dup) {
+                    continue;
+                }
+                error_log('generarCodigoQR: ' . $e->getMessage());
+                return false;
+            }
         }
-        
+
         return false;
+    }
+
+    public function obtenerCodigoPorLlave($codigo) {
+        $query = "SELECT cq.*, v.nombre, v.apellido, v.tipo_identificacion, v.numero_identificacion,
+                         v.empresa_representa, v.condicion
+                  FROM codigos_qr cq
+                  INNER JOIN visitantes v ON v.id = cq.visitante_id
+                  WHERE cq.codigo = :codigo
+                  LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([':codigo' => $codigo]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
     // Obtener código QR de un visitante
     public function obtenerCodigoQR($visitante_id) {
         $query = "SELECT cq.* FROM codigos_qr cq 
                   WHERE cq.visitante_id = :visitante_id 
-                  AND cq.usado = FALSE 
+                  AND IFNULL(cq.usado, 0) = 0
                   ORDER BY cq.fecha_creacion DESC 
                   LIMIT 1";
         
